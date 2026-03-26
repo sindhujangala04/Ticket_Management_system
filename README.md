@@ -54,6 +54,7 @@ Run the application using your IDE or Maven:
 
 Bash
 mvn spring-boot:run
+
 2. Frontend (React)
 Navigate to the frontend folder.
 
