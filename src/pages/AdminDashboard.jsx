@@ -88,12 +88,19 @@ const AdminDashboard = () => {
         <div style={sectionStyle}>
           <h3>Unassigned Tickets</h3>
           <table border="1" width="100%" style={tableStyle}>
-            <thead>
-              <tr><th>Issue</th><th>Domain</th><th>Action</th></tr>
-            </thead>
+            <thead style={{ backgroundColor: "#0d6efd", color: "white" }}>
+             <tr><th>Issue</th><th>Domain</th><th>Action</th></tr>
+            </thead>    
             <tbody>
               {raisedTickets.map(t => (
-                <tr key={t.tid}>
+               <tr
+  key={t.tid}
+  style={{
+    backgroundColor: "#6f42c1",  // purple
+    color: "white",
+    fontWeight: "500"
+  }}
+>
                   <td>{t.issuetitle}</td>
                   <td>{t.domain}</td>
                   <td><button onClick={() => openAssignModal(t)}>Assign Tech</button></td>
@@ -107,14 +114,24 @@ const AdminDashboard = () => {
           <h3>Global Status</h3>
           <h4>Resolved & Ready to Report</h4>
           <table border="1" width="100%" style={tableStyle}>
-            <thead>
-              <tr><th>Issue</th><th>Tech ID</th><th>Action</th></tr>
+          <thead style={{ backgroundColor: "#0d6efd", color: "white" }}>
+              <tr><th>Issue Title</th>
+              <th>Tech ID</th>
+              <th>Status</th>
+              <th>Action</th>
+              </tr>
             </thead>
             <tbody>
               {allTickets.resolvedTickets.map(at => (
-                <tr key={at.tid}>
+               <tr
+  key={at.tid}
+  style={{
+    backgroundColor: at.status === "RESOLVED" ? "#60c99a" : "white"
+  }}
+>
                   <td>{at.issuetitle}</td>
                   <td>{at.techId}</td>
+                  <td>{at.status}</td>
                   <td>
                     {!at.sentToClient ? (
                       <button onClick={() => handleReportToClient(at.tid)}>Report to Client</button>
@@ -124,6 +141,50 @@ const AdminDashboard = () => {
               ))}
             </tbody>
           </table>
+
+          <h4 style={{ marginTop: '20px' }}>Active / In-Progress Tickets</h4>
+
+<table border="1" width="100%" style={tableStyle}>
+ <thead style={{ backgroundColor: "#0d6efd", color: "white" }}>
+    <tr>
+      <th>ID</th>
+      <th>Issue Title</th>
+      <th>Domain</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {allTickets.activeTickets?.filter(t => t.status !== "RESOLVED").length > 0 ? (
+      allTickets.activeTickets
+        .filter(t => t.status !== "RESOLVED")
+        .map(t => (
+          <tr
+  key={t.tid}
+  style={{
+    backgroundColor:
+      t.status === "PENDING"
+        ? "#9064e2"
+        : t.status === "INPROGRESS"
+        ? "#f0cc5f"   // yellow
+        : "#c43c49",  // red
+    color: t.status === "INPROGRESS" ? "black" : "white",
+    fontWeight: "500"
+  }}
+>
+            <td>{t.tid}</td>
+            <td>{t.issuetitle}</td>
+            <td>{t.domain}</td>
+            <td>{t.status}</td>
+          </tr>
+        ))
+    ) : (
+      <tr>
+        <td colSpan="4" align="center">No Active Tickets</td>
+      </tr>
+    )}
+  </tbody>
+</table>
         </div>
       </div>
 

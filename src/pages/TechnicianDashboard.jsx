@@ -72,18 +72,36 @@ const TechnicianDashboard = () => {
         <thead>
           <tr style={{ backgroundColor: '#f4f4f4' }}>
             <th style={{ padding: '12px' }}>Ticket ID</th>
+            <th>Issue date</th>
             <th>Issue Title</th>
-            <th>Domain</th>
+            <th>Description</th>
+           
             <th>Current Status</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {assignedTickets.length > 0 ? assignedTickets.map(t => (
-            <tr key={t.tid}>
+           <tr
+  key={t.tid}
+  style={{
+    backgroundColor:
+      t.status === 'RESOLVED'
+        ? '#198754'   // green
+        : t.status === 'INPROGRESS'
+        ? '#ffc107'   // yellow
+        : t.status === 'ASSIGNED'
+        ? '#6f42c1'   // purple
+        : '#dc3545',  // red
+    color: t.status === 'INPROGRESS' ? 'black' : 'white',
+    fontWeight: '500'
+  }}
+>
               <td style={{ padding: '10px', textAlign: 'center' }}>{t.tid}</td>
+              <td>{t.issuedate}</td>
               <td>{t.issuetitle}</td>
-              <td>{t.domain}</td>
+              <td>{t.description}</td>
+              
               <td style={{ textAlign: 'center' }}>
                 <span style={{ 
                   fontWeight: 'bold', 

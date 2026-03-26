@@ -80,21 +80,36 @@ const ClientDashboard = () => {
 	    <div style={{ flex: 1 }}>
 	      <h3>Pending Tickets</h3>
 	      <table border="1" width="100%" cellPadding="8">
-	        <thead>
+	          <thead style={{ backgroundColor: "#7dacf3" }}>
+	     
 	          <tr>
 	            <th>ID</th>
+               <th>Issue Date</th>
 	            <th>Issue Title</th>
-	            <th>Description</th>
+	           
+              <th>Domain</th>
 	            <th>Status</th>
 	          </tr>
 	        </thead>
 	        <tbody>
 	          {tickets.pendingTickets.length > 0 ? (
 	            tickets.pendingTickets.map(t => (
-	              <tr key={t.tid}>
+	              <tr key={t.tid} style={{
+      backgroundColor:
+      t.status === "PENDING"
+          ? "#9064e2"
+           :
+        t.status === "INPROGRESS"
+          ? "#ffc107"
+          : "#dc3545",
+      color: "white",
+      fontWeight: "500"
+    }}>
 	                <td>{t.tid}</td>
+                  <td>{t.issuedate}</td>
 	                <td>{t.issuetitle}</td>
-	                <td>{t.description}</td>
+	              
+                  <td>{t.domain}</td>
 	                <td>{t.status}</td>
 	              </tr>
 	            ))
@@ -111,25 +126,32 @@ const ClientDashboard = () => {
 	    <div style={{ flex: 1 }}>
 	      <h3>Resolved Tickets</h3>
 	      <table border="1" width="100%" cellPadding="8">
-	        <thead>
+          <thead style={{ backgroundColor: "#7dacf3" }}>
+	     
 	          <tr>
 	            <th>ID</th>
+              <th>Resolved date</th>
 	            <th>Issue Title</th>
+              <th>Description</th>
+              <th>Domain</th>
 	            <th>Solution</th>
 	          </tr>
 	        </thead>
 	        <tbody>
 	          {tickets.resolvedTickets.length > 0 ? (
 	            tickets.resolvedTickets.map(t => (
-	              <tr key={t.tid}>
+	                   <tr key={t.tid} style={{ backgroundColor: "#329267", color: "#0a3f27" }}>
 	                <td>{t.tid}</td>
+                  <td>{t.issuedate}</td>
 	                <td>{t.issuetitle}</td>
+                  <td>{t.description}</td>
+                  <td>{t.domain}</td>
 	                <td>{t.sol}</td>
 	              </tr>
 	            ))
 	          ) : (
 	            <tr>
-	              <td colSpan="3" align="center">No Resolved Tickets</td>
+	              <td colSpan="6" align="center">No Resolved Tickets</td>
 	            </tr>
 	          )}
 	        </tbody>
